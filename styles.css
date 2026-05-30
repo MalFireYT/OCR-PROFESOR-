@@ -1,0 +1,104 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+.topbar {
+  background: #1e3a8a;
+  color: #fff;
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar h1 { margin: 0 0 8px; font-size: 1.2rem; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.tab.active { background: #fff; color: #1e3a8a; font-weight: 600; }
+main { max-width: 820px; margin: 0 auto; padding: 16px; }
+.panel { display: none; background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.panel.active { display: block; }
+h2 { margin-top: 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+label { display: flex; flex-direction: column; font-size: 0.85rem; gap: 4px; font-weight: 600; }
+input, select { padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; font-weight: 400; }
+.hint { color: #6b7280; font-size: 0.85rem; }
+.actions { margin-top: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+button.primary { background: #2563eb; color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+button.danger { background: #dc2626; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+button:not(.primary):not(.danger):not(.tab):not(.opt) { background: #e5e7eb; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+.status { color: #059669; font-size: 0.85rem; }
+
+/* Pauta */
+.pauta { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px; margin-top: 10px; }
+.pauta-row { display: flex; align-items: center; gap: 6px; background: #f9fafb; padding: 4px 8px; border-radius: 6px; }
+.pauta-row .qn { width: 26px; font-weight: 600; font-size: 0.85rem; }
+.opt { width: 30px; height: 30px; border: 1px solid #cbd5e1; background: #fff; border-radius: 50%; cursor: pointer; font-size: 0.8rem; }
+.opt.sel { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+/* Resultado */
+#resultado { margin-top: 14px; }
+.nota-box { display: flex; gap: 18px; align-items: center; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+.nota-num { font-size: 2.4rem; font-weight: 800; color: #15803d; }
+.nota-num.bajo { color: #b91c1c; }
+.warn { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+.detalle { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 5px; }
+.dq { display: flex; align-items: center; gap: 4px; padding: 4px 6px; border-radius: 6px; font-size: 0.8rem; }
+.dq.ok { background: #dcfce7; }
+.dq.bad { background: #fee2e2; }
+.dq.flag { background: #fef3c7; }
+.dq select { padding: 2px; font-size: 0.8rem; }
+.debug-wrap img, .debug-wrap canvas { max-width: 280px; border: 1px solid #ddd; border-radius: 6px; }
+table.hist { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+table.hist th, table.hist td { border-bottom: 1px solid #e5e7eb; padding: 6px; text-align: left; }
+
+/* Hoja imprimible */
+.sheet-wrap { display: flex; justify-content: center; margin: 16px 0; }
+.sheet {
+  position: relative;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+}
+.fiducial {
+  position: absolute;
+  background: #000;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.sheet-header .sheet-title { font: 700 14pt sans-serif; }
+.sheet-header .sheet-fields { display: flex; flex-direction: column; gap: 3mm; font: 10pt sans-serif; margin-top: 3mm; }
+.sheet-header .sheet-hint { font: 7pt sans-serif; color: #444; margin-top: 2mm; }
+.qnum { font: 700 8pt sans-serif; }
+.bubble {
+  border: 0.4mm solid #222;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 6pt sans-serif;
+  color: #c7c7c7; /* letra clara: no interfiere con la detección */
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  main { padding: 0; max-width: none; }
+  .sheet-wrap { margin: 0; }
+  .sheet { box-shadow: none; }
+  .sheet, .sheet * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @page { size: A4; margin: 0; }
+}

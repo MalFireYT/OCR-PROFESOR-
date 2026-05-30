@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corrector de Pruebas (OMR)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar no-print">
+    <h1>Corrector de Pruebas</h1>
+    <nav class="tabs">
+      <button class="tab active" data-tab="config">1. Configurar</button>
+      <button class="tab" data-tab="hoja">2. Hoja</button>
+      <button class="tab" data-tab="corregir">3. Corregir</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- CONFIGURAR -->
+    <section id="tab-config" class="panel active no-print">
+      <h2>Configuración de la prueba</h2>
+      <div class="grid2">
+        <label>Título de la prueba
+          <input id="cfg-titulo" type="text" placeholder="Prueba de Historia" />
+        </label>
+        <label>N° de preguntas (1–50)
+          <input id="cfg-nq" type="number" min="1" max="50" value="20" />
+        </label>
+        <label>Alternativas por pregunta
+          <select id="cfg-nopt">
+            <option value="2">2 (A–B)</option>
+            <option value="3">3 (A–C)</option>
+            <option value="4">4 (A–D)</option>
+            <option value="5" selected>5 (A–E)</option>
+          </select>
+        </label>
+        <label>Exigencia (% para nota 4.0)
+          <input id="cfg-exig" type="number" min="40" max="80" value="60" />
+        </label>
+      </div>
+
+      <h3>Pauta (respuestas correctas)</h3>
+      <p class="hint">Marca la alternativa correcta de cada pregunta.</p>
+      <div id="pauta" class="pauta"></div>
+      <div class="actions">
+        <button id="btn-guardar" class="primary">Guardar configuración</button>
+        <span id="cfg-status" class="status"></span>
+      </div>
+    </section>
+
+    <!-- HOJA -->
+    <section id="tab-hoja" class="panel no-print">
+      <h2>Hoja de respuesta imprimible</h2>
+      <p class="hint">Imprime esta hoja, que el alumno la rellene, y luego escanéala en el paso 3.</p>
+      <div class="actions">
+        <button id="btn-print" class="primary">Imprimir hoja</button>
+      </div>
+    </section>
+    <div id="sheet-container" class="sheet-wrap"></div>
+
+    <!-- CORREGIR -->
+    <section id="tab-corregir" class="panel no-print">
+      <h2>Corregir una prueba</h2>
+      <div class="grid2">
+        <label>Nombre del alumno (opcional)
+          <input id="alumno" type="text" placeholder="Nombre" />
+        </label>
+        <label>Tomar / subir foto de la hoja
+          <input id="foto" type="file" accept="image/*" capture="environment" />
+        </label>
+      </div>
+      <div id="cv-status" class="status"></div>
+      <div id="resultado"></div>
+
+      <h3>Notas guardadas</h3>
+      <div id="historial"></div>
+      <div class="actions">
+        <button id="btn-csv">Exportar CSV</button>
+        <button id="btn-clear-hist" class="danger">Borrar lista</button>
+      </div>
+    </section>
+  </main>
+
+  <img id="hidden-img" alt="" style="display:none" />
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
