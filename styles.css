@@ -41,8 +41,8 @@ button:not(.primary):not(.danger):not(.tab):not(.opt) { background: #e5e7eb; bor
 .status { color: #059669; font-size: 0.85rem; }
 
 /* Pauta */
-.pauta { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px; margin-top: 10px; }
-.pauta-row { display: flex; align-items: center; gap: 6px; background: #f9fafb; padding: 4px 8px; border-radius: 6px; }
+.pauta { column-width: 200px; column-gap: 12px; margin-top: 10px; }
+.pauta-row { display: flex; align-items: center; gap: 6px; background: #f9fafb; padding: 4px 8px; border-radius: 6px; margin-bottom: 6px; break-inside: avoid; -webkit-column-break-inside: avoid; }
 .pauta-row .qn { width: 26px; font-weight: 600; font-size: 0.85rem; }
 .opt { width: 30px; height: 30px; border: 1px solid #cbd5e1; background: #fff; border-radius: 50%; cursor: pointer; font-size: 0.8rem; }
 .opt.sel { background: #2563eb; color: #fff; border-color: #2563eb; }
