@@ -14,7 +14,30 @@ body {
   z-index: 10;
 }
 .topbar h1 { margin: 0 0 8px; font-size: 1.2rem; }
+.topbar-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.user-area { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.user-email { font-size: 0.8rem; opacity: 0.9; }
+.btn-logout { background: rgba(255,255,255,0.18); color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
 .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* Login */
+#app { display: none; }
+body.authed #app { display: block; }
+body.authed #auth-screen { display: none; }
+.auth-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; background: #1e3a8a; }
+.auth-card { background: #fff; border-radius: 12px; padding: 24px; width: 100%; max-width: 360px; box-shadow: 0 6px 24px rgba(0,0,0,0.2); }
+.auth-card h1 { margin: 0 0 6px; font-size: 1.3rem; color: #1e3a8a; }
+.auth-card label { margin-top: 12px; }
+.auth-msg { margin-top: 10px; font-size: 0.85rem; min-height: 1.2em; }
+.auth-msg.err { color: #b91c1c; }
+.auth-msg.ok { color: #059669; }
+
+/* Cursos / nómina */
+textarea { padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; font-family: inherit; resize: vertical; }
+.card-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.card-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; }
+.card-item .meta { font-size: 0.8rem; color: #6b7280; }
+.btn-del { background: #fee2e2; color: #b91c1c; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
 .tab {
   background: rgba(255,255,255,0.15);
   color: #fff;
