@@ -33,11 +33,13 @@ function setAuthMsg(text, cls = "") {
 }
 // Permite entrar con "usuario" (sin @) o con un correo real.
 // Internamente Supabase usa correo, así que un usuario se mapea a un correo técnico.
+// El dominio debe ser un TLD válido (Supabase rechaza .local y otros reservados).
+const USER_DOMAIN = "@ocr-profesor.com";
 function toEmail(input) {
   const v = (input || "").trim();
   if (!v) return "";
   if (v.includes("@")) return v.toLowerCase();
-  return v.toLowerCase().replace(/\s+/g, "") + "@ocr-profesor.local";
+  return v.toLowerCase().replace(/\s+/g, "") + USER_DOMAIN;
 }
 $("btn-login").addEventListener("click", async () => {
   try {
@@ -68,7 +70,7 @@ function traducirAuth(msg) {
 db.onAuthChange(async (user) => {
   if (user) {
     document.body.classList.add("authed");
-    $("user-email").textContent = (user.email || "").replace("@ocr-profesor.local", "");
+    $("user-email").textContent = (user.email || "").replace(USER_DOMAIN, "");
     await refreshCursos();
   } else {
     document.body.classList.remove("authed");
