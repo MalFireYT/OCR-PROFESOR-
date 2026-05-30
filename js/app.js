@@ -1,5 +1,5 @@
 import { renderSheet } from "./sheet.js";
-import { detectSheet, cvReady } from "./omr.js";
+import { detectSheet, preloadCv } from "./omr.js";
 import { calcNota, gradeAnswers } from "./grading.js";
 
 const ALL = ["A", "B", "C", "D", "E"];
@@ -36,8 +36,21 @@ document.querySelectorAll(".tab").forEach((t) => {
     const sw = $("sheet-container");
     if (t.dataset.tab === "hoja") { sw.classList.remove("hidden"); drawSheet(); }
     else { sw.classList.add("hidden"); }
+    if (t.dataset.tab === "corregir") prepareCv();
   });
 });
+
+// Precarga OpenCV en segundo plano (en el worker, sin congelar la interfaz).
+let cvStarted = false;
+function prepareCv() {
+  if (cvStarted) return;
+  cvStarted = true;
+  $("cv-status").textContent = "Preparando motor de visión en segundo plano…";
+  $("cv-status").style.color = "#92400e";
+  preloadCv()
+    .then(() => { $("cv-status").textContent = "✓ Listo para corregir."; $("cv-status").style.color = "#059669"; })
+    .catch((e) => { cvStarted = false; $("cv-status").textContent = "✗ " + e.message; $("cv-status").style.color = "#b91c1c"; });
+}
 
 // ---- Configuración UI ----
 const $ = (id) => document.getElementById(id);
@@ -115,12 +128,10 @@ $("foto").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
   const img = $("hidden-img");
-  $("cv-status").textContent = "Cargando motor de visión y procesando… (unos segundos la 1ª vez)";
+  prepareCv(); // por si entró directo sin pasar por la pestaña
+  $("cv-status").textContent = "Procesando imagen…";
   $("cv-status").style.color = "#92400e";
-  img.onload = () => {
-    // Dejar que el navegador pinte el mensaje antes de la carga pesada.
-    requestAnimationFrame(() => setTimeout(() => runDetection(img), 0));
-  };
+  img.onload = () => runDetection(img);
   img.src = URL.createObjectURL(file);
 });
 
