@@ -38,6 +38,14 @@ textarea { padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-siz
 .card-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; }
 .card-item .meta { font-size: 0.8rem; color: #6b7280; }
 .btn-del { background: #fee2e2; color: #b91c1c; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+
+/* Panel de resumen */
+.admin-panel { margin-bottom: 16px; }
+.panel-greet { font-size: 1.05rem; margin-bottom: 10px; }
+.panel-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; text-align: center; }
+.stat-num { font-size: 1.8rem; font-weight: 800; color: #1e3a8a; }
+.stat-lbl { font-size: 0.8rem; color: #6b7280; }
 .tab {
   background: rgba(255,255,255,0.15);
   color: #fff;

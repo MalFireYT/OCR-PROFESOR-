@@ -31,19 +31,27 @@ function setAuthMsg(text, cls = "") {
   m.textContent = text;
   m.className = "auth-msg" + (cls ? " " + cls : "");
 }
+// Permite entrar con "usuario" (sin @) o con un correo real.
+// Internamente Supabase usa correo, así que un usuario se mapea a un correo técnico.
+function toEmail(input) {
+  const v = (input || "").trim();
+  if (!v) return "";
+  if (v.includes("@")) return v.toLowerCase();
+  return v.toLowerCase().replace(/\s+/g, "") + "@ocr-profesor.local";
+}
 $("btn-login").addEventListener("click", async () => {
   try {
     setAuthMsg("Entrando…");
-    await db.signIn($("auth-email").value.trim(), $("auth-pass").value);
+    await db.signIn(toEmail($("auth-email").value), $("auth-pass").value);
     setAuthMsg("");
   } catch (e) { setAuthMsg(traducirAuth(e.message), "err"); }
 });
 $("btn-signup").addEventListener("click", async () => {
   try {
     setAuthMsg("Creando cuenta…");
-    const r = await db.signUp($("auth-email").value.trim(), $("auth-pass").value);
+    const r = await db.signUp(toEmail($("auth-email").value), $("auth-pass").value);
     if (r.session) setAuthMsg("");
-    else setAuthMsg("Cuenta creada. Revisa tu correo para confirmarla y luego entra.", "ok");
+    else setAuthMsg("Cuenta creada. Si pide confirmación, revísala; si no, ya puedes Entrar.", "ok");
   } catch (e) { setAuthMsg(traducirAuth(e.message), "err"); }
 });
 $("btn-logout").addEventListener("click", () => db.signOut());
@@ -60,7 +68,7 @@ function traducirAuth(msg) {
 db.onAuthChange(async (user) => {
   if (user) {
     document.body.classList.add("authed");
-    $("user-email").textContent = user.email || "";
+    $("user-email").textContent = (user.email || "").replace("@ocr-profesor.local", "");
     await refreshCursos();
   } else {
     document.body.classList.remove("authed");
@@ -103,6 +111,21 @@ async function refreshCursos() {
   fillCursoSelects();
   renderAlumnos();
   renderHist();
+  renderPanel();
+}
+
+async function renderPanel() {
+  const cont = $("admin-panel");
+  const usuario = $("user-email").textContent || "profesor";
+  let c = { cursos: cursos.length, alumnos: 0, notas: 0 };
+  try { c = await db.counts(); } catch {}
+  cont.innerHTML = `
+    <div class="panel-greet">Hola, <strong>${esc(usuario)}</strong> 👋</div>
+    <div class="panel-stats">
+      <div class="stat"><div class="stat-num">${c.cursos}</div><div class="stat-lbl">cursos</div></div>
+      <div class="stat"><div class="stat-num">${c.alumnos}</div><div class="stat-lbl">alumnos</div></div>
+      <div class="stat"><div class="stat-num">${c.notas}</div><div class="stat-lbl">notas guardadas</div></div>
+    </div>`;
 }
 
 function renderCursos() {

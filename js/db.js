@@ -30,6 +30,17 @@ export function onAuthChange(cb) {
   supa.auth.onAuthStateChange((_event, session) => cb(session?.user || null));
 }
 
+// ---- Resumen (panel) ----
+export async function counts() {
+  const tablas = ["cursos", "alumnos", "notas"];
+  const out = {};
+  for (const t of tablas) {
+    const { count } = await supa.from(t).select("*", { count: "exact", head: true });
+    out[t] = count || 0;
+  }
+  return out;
+}
+
 // ---- Cursos ----
 export async function listCursos() {
   const { data, error } = await supa

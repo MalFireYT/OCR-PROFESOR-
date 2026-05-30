@@ -12,9 +12,9 @@
   <div id="auth-screen" class="auth-screen">
     <div class="auth-card">
       <h1>Corrector de Pruebas</h1>
-      <p class="hint">Entra con tu correo para ver tus cursos y notas desde cualquier dispositivo.</p>
-      <label>Correo
-        <input id="auth-email" type="email" autocomplete="email" placeholder="profe@correo.com" />
+      <p class="hint">Entra con tu usuario para ver tus cursos y notas desde cualquier dispositivo.</p>
+      <label>Usuario
+        <input id="auth-email" type="text" autocomplete="username" placeholder="Claudio.Cerda" />
       </label>
       <label>Contraseña
         <input id="auth-pass" type="password" autocomplete="current-password" placeholder="••••••" />
@@ -48,6 +48,7 @@
     <main>
       <!-- CURSOS -->
       <section id="tab-cursos" class="panel active no-print">
+        <div id="admin-panel" class="admin-panel"></div>
         <h2>Mis cursos</h2>
         <div class="grid2">
           <label>Nombre del curso
