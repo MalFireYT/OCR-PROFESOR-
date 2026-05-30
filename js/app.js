@@ -34,25 +34,8 @@ document.querySelectorAll(".tab").forEach((t) => {
     t.classList.add("active");
     document.getElementById("tab-" + t.dataset.tab).classList.add("active");
     if (t.dataset.tab === "hoja") drawSheet();
-    if (t.dataset.tab === "corregir") prepareCv();
   });
 });
-
-let cvStarted = false;
-function prepareCv() {
-  if (cvStarted) return;
-  cvStarted = true;
-  $("cv-status").textContent = "Cargando motor de visión… (unos segundos la 1ª vez)";
-  $("cv-status").style.color = "#92400e";
-  cvReady().then(() => {
-    $("cv-status").textContent = "✓ Listo para corregir.";
-    $("cv-status").style.color = "#059669";
-  }).catch((e) => {
-    cvStarted = false;
-    $("cv-status").textContent = "✗ " + e.message;
-    $("cv-status").style.color = "#b91c1c";
-  });
-}
 
 // ---- Configuración UI ----
 const $ = (id) => document.getElementById(id);
@@ -124,9 +107,13 @@ $("foto").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
   const img = $("hidden-img");
-  img.onload = () => runDetection(img);
+  $("cv-status").textContent = "Cargando motor de visión y procesando… (unos segundos la 1ª vez)";
+  $("cv-status").style.color = "#92400e";
+  img.onload = () => {
+    // Dejar que el navegador pinte el mensaje antes de la carga pesada.
+    requestAnimationFrame(() => setTimeout(() => runDetection(img), 0));
+  };
   img.src = URL.createObjectURL(file);
-  $("cv-status").textContent = "Procesando imagen…";
 });
 
 async function runDetection(img) {
