@@ -33,7 +33,9 @@ document.querySelectorAll(".tab").forEach((t) => {
     document.querySelectorAll(".panel").forEach((x) => x.classList.remove("active"));
     t.classList.add("active");
     document.getElementById("tab-" + t.dataset.tab).classList.add("active");
-    if (t.dataset.tab === "hoja") drawSheet();
+    const sw = $("sheet-container");
+    if (t.dataset.tab === "hoja") { sw.classList.remove("hidden"); drawSheet(); }
+    else { sw.classList.add("hidden"); }
   });
 });
 
@@ -86,7 +88,10 @@ function buildPauta() {
 }
 
 ["cfg-nq", "cfg-nopt"].forEach((id) =>
-  $(id).addEventListener("change", () => { readConfigForm(); buildPauta(); })
+  $(id).addEventListener("change", () => { readConfigForm(); buildPauta(); sheetDirty = true; })
+);
+["cfg-titulo", "cfg-exig"].forEach((id) =>
+  $(id).addEventListener("input", () => { sheetDirty = true; })
 );
 $("btn-guardar").addEventListener("click", () => {
   readConfigForm();
@@ -96,9 +101,12 @@ $("btn-guardar").addEventListener("click", () => {
 });
 
 // ---- Hoja ----
+let sheetDirty = true;
 function drawSheet() {
   readConfigForm();
+  if (!sheetDirty) return; // ya está dibujada para esta configuración
   renderSheet($("sheet-container"), config, { titulo: config.titulo });
+  sheetDirty = false;
 }
 $("btn-print").addEventListener("click", () => { drawSheet(); window.print(); });
 

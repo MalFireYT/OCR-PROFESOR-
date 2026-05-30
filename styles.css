@@ -65,6 +65,7 @@ table.hist th, table.hist td { border-bottom: 1px solid #e5e7eb; padding: 6px; t
 
 /* Hoja imprimible */
 .sheet-wrap { display: flex; justify-content: center; margin: 16px 0; }
+.sheet-wrap.hidden { display: none; }
 .sheet {
   position: relative;
   background: #fff;
@@ -94,7 +95,7 @@ table.hist th, table.hist td { border-bottom: 1px solid #e5e7eb; padding: 6px; t
   .no-print { display: none !important; }
   body { background: #fff; }
   main { padding: 0; max-width: none; }
-  .sheet-wrap { margin: 0; }
+  .sheet-wrap { margin: 0; display: flex !important; }
   .sheet { box-shadow: none; }
   .sheet, .sheet * {
     -webkit-print-color-adjust: exact;
