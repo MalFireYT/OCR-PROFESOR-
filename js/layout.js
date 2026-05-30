@@ -56,6 +56,15 @@ export function buildLayout(config) {
 
   const bubbles = []; // { q, option, optIndex, x, y }
   const rowAnchors = []; // { q, x, y } para dibujar el número de pregunta
+  const headers = []; // { x, y, label } letras A B C... arriba de cada columna
+
+  const headerY = gridTop - 5; // sobre la primera fila de burbujas
+  for (let col = 0; col < nCols; col++) {
+    const colX = areaX + col * colW;
+    for (let o = 0; o < numOptions; o++) {
+      headers.push({ x: colX + firstBubbleDX + o * optSpacing, y: headerY, label: options[o] });
+    }
+  }
 
   for (let i = 0; i < numQuestions; i++) {
     const col = Math.floor(i / rowsPerCol);
@@ -78,6 +87,7 @@ export function buildLayout(config) {
     bubbleDiam,
     bubbles,
     rowAnchors,
+    headers,
     optSpacing,
   };
 }

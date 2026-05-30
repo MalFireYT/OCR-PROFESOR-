@@ -34,6 +34,17 @@ export function renderSheet(container, config, meta = {}) {
   `;
   page.appendChild(header);
 
+  // Encabezado de opciones (A B C ...) arriba de cada columna.
+  for (const h of layout.headers) {
+    const lab = el("div", "opt-header");
+    lab.style.position = "absolute";
+    lab.style.left = h.x + "mm";
+    lab.style.top = h.y + "mm";
+    lab.style.transform = "translateX(-50%)";
+    lab.textContent = h.label;
+    page.appendChild(lab);
+  }
+
   // Números de pregunta + etiquetas de opción.
   for (const a of layout.rowAnchors) {
     const num = el("div", "qnum");

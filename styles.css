@@ -81,6 +81,7 @@ table.hist th, table.hist td { border-bottom: 1px solid #e5e7eb; padding: 6px; t
 .sheet-header .sheet-fields { display: flex; flex-direction: column; gap: 3mm; font: 10pt sans-serif; margin-top: 3mm; }
 .sheet-header .sheet-hint { font: 7pt sans-serif; color: #444; margin-top: 2mm; }
 .qnum { font: 700 8pt sans-serif; }
+.opt-header { font: 700 8pt sans-serif; color: #000; }
 .bubble {
   border: 0.4mm solid #222;
   border-radius: 50%;
